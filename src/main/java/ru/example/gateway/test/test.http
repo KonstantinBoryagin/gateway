@@ -1,0 +1,45 @@
+###
+POST http://10.242.4.198:8088/auth/realms/Lam/protocol/openid-connect/token
+Authorization: Basic Lam X9M2TMcuVjJ8nXDlZHYuPNNttN8N2L1T
+Content-Type: application/x-www-form-urlencoded
+
+client_id=Lam-client&grant_type=password&scope=openid&username=admin&password=admin
+
+> {% client.global.set("access_token", response.body.access_token); %}
+
+###
+GET http://localhost:8090/user/all
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+###
+DELETE http://localhost:8090/user/2
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+###
+GET http://localhost:8080/lam/user/all
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+###
+POST http://localhost:8080/refresh
+X-Gitlab-Token: i9EIX7jrqDuqCr14E5np
+Content-Type: application/json
+
+###
+POST http://localhost:8090/user/adduser
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "username": "And24774430",
+  "registrationtime": "31.12.2004 12:54:12.001",
+  "active": true,
+  "city": "Moscow",
+  "roles": [
+    "admin",
+    "user",
+    "asd"
+  ]
+}
